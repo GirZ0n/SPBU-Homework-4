@@ -5,7 +5,6 @@ test_folder = "./resources/"
 
 
 class WcTestCase(unittest.TestCase):
-
     def test_empty_file(self):
         with open(f"{test_folder}/empty.txt", "r") as f:
             info = wc.get_file_information(f)
