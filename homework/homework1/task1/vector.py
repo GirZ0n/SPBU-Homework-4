@@ -11,7 +11,7 @@ class Vector:
         self.__elements = list(elements)
 
     def __str__(self):
-        return str(self.__elements)
+        return f"({', '.join(map(str, self.__elements))})"
 
     def dot(self, other: "Vector"):
         if len(self.__elements) != len(other.__elements):
