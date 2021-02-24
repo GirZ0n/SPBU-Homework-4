@@ -1,7 +1,7 @@
 import unittest
 import homework.homework1.task2.wc as wc
 
-test_folder = "./resources/"
+test_folder = "./resources"
 
 
 class WcTestCase(unittest.TestCase):
