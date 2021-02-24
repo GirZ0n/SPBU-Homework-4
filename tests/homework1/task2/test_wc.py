@@ -1,6 +1,8 @@
 import unittest
 import homework.homework1.task2.wc as wc
 
+path = "./resources"
+
 
 class WcTestCase(unittest.TestCase):
     def test_empty_file(self):
@@ -11,7 +13,7 @@ class WcTestCase(unittest.TestCase):
             self.assertEqual(info.number_of_bytes, 0)
 
     def test_one_line_one_word(self):
-        with open("resources/one_line_one_word.txt", "r") as f:
+        with open(f"{path}/one_line_one_word.txt", "r") as f:
             info = wc.get_file_information(f)
             self.assertEqual(info.number_of_lines, 1)
             self.assertEqual(info.number_of_words, 1)
