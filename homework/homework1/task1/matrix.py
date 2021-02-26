@@ -46,7 +46,7 @@ class Matrix:
             *[
                 [
                     Vector(*self.__matrix[i]).dot(Vector(*other.transpose().__matrix[j]))
-                    for j in range(other.transpose().__number_of_rows())
+                    for j in range(other.__number_of_columns())
                 ]
                 for i in range(self.__number_of_rows())
             ]
