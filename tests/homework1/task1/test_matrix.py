@@ -7,7 +7,7 @@ class MatrixTestCase(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             Matrix()
 
-        self.assertTrue("The matrix must contain at least one element." in str(context.exception))
+        self.assertTrue("Matrix must contain at least one element." in str(context.exception))
 
     def test_constructor_different_length(self):
         with self.assertRaises(ValueError) as context:
