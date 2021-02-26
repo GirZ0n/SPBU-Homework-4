@@ -1,10 +1,11 @@
 from math import sqrt, acos, degrees
+from typing import List, Union
 
 
 class Vector:
-    __elements: list[int]
+    __elements: List[Union[int, float]]
 
-    def __init__(self, *elements: int):
+    def __init__(self, *elements: Union[int, float]):
         if not elements:
             raise ValueError("The vector must contain at least one element.")
 
@@ -23,4 +24,4 @@ class Vector:
         return sqrt(self.dot(self))
 
     def angle(self, other: "Vector"):
-        return degrees(acos(self.dot(other) / self.norm() / other.norm()))
+        return degrees(acos(self.dot(other) / (self.norm() * other.norm())))
