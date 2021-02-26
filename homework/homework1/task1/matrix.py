@@ -1,11 +1,20 @@
-class Matrix:
-    __matrix: list[list[int]]
+from typing import List, Union
 
-    def __init__(self, *matrix: list[int]):
+from homework.homework1.task1.vector import Vector
+
+
+class Matrix:
+    __matrix: List[List[Union[int, float]]]
+
+    def __init__(self, *matrix: List[Union[int, float]]):
         if not matrix:
-            raise ValueError("The matrix must contain at least one element.")
+            raise ValueError("Matrix must contain at least one element.")
 
         length = len(matrix[0])
+
+        if length == 0:
+            raise ValueError("Matrix rows must not be empty.")
+
         for row in matrix:
             if len(row) != length:
                 raise ValueError("Matrix rows must be the same length.")
@@ -25,41 +34,28 @@ class Matrix:
         if not self.__are_dimensions_equal(other):
             raise ValueError("Matrices do not have the same dimensions.")
 
-        new_matrix = list()
-        for i in range(self.__number_of_rows()):
-            row = list()
-            for j in range(self.__number_of_columns()):
-                row.append(self.__matrix[i][j] + other.__matrix[i][j])
-            new_matrix.append(row)
-
-        return Matrix(*new_matrix)
+        return Matrix(
+            *[[x + y for x, y in zip(self.__matrix[i], other.__matrix[i])] for i in range(self.__number_of_rows())]
+        )
 
     def __mul__(self, other: "Matrix"):
         if not self.__can_be_multiplied(other):
             raise ValueError("Matrices have incompatible dimensions.")
 
-        result = list()
-        for i in range(self.__number_of_rows()):
-            row = list()
-            for j in range(other.__number_of_columns()):
-                total = 0
-                for k in range(other.__number_of_rows()):
-                    total += self.__matrix[i][k] * other.__matrix[k][j]
-                row.append(total)
-            result.append(row)
-
-        return Matrix(*result)
+        return Matrix(
+            *[
+                [
+                    Vector(*self.__matrix[i]).dot(Vector(*other.transpose().__matrix[j]))
+                    for j in range(other.transpose().__number_of_rows())
+                ]
+                for i in range(self.__number_of_rows())
+            ]
+        )
 
     def transpose(self):
-        transposed_array = list()
-
-        for j in range(self.__number_of_columns()):
-            row = list()
-            for i in range(self.__number_of_rows()):
-                row.append(self.__matrix[i][j])
-            transposed_array.append(row)
-
-        return Matrix(*transposed_array)
+        return Matrix(
+            *[[self.__matrix[i][j] for i in range(self.__number_of_rows())] for j in range(self.__number_of_columns())]
+        )
 
     def __number_of_columns(self):
         return len(self.__matrix[0])
