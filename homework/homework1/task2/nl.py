@@ -4,7 +4,6 @@ from typing import TextIO
 
 def print_with_line_numbers(file_stream: TextIO, start_index: int) -> None:
     index = start_index
-
     for line in file_stream:
         if line.strip():
             print(f"{index}\t", end="")
@@ -13,11 +12,7 @@ def print_with_line_numbers(file_stream: TextIO, start_index: int) -> None:
 
 
 def get_next_start_index(file_stream: TextIO, start_index: int) -> int:
-    delta = 0
-    for line in file_stream:
-        if line.strip():
-            delta += 1
-    return start_index + delta
+    return start_index + len(list(filter(lambda x: x.strip(), file_stream.readlines())))
 
 
 def main(*files: str) -> None:
