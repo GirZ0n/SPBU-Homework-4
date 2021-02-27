@@ -2,7 +2,7 @@ import sys
 from typing import TextIO
 
 
-def print_tail(file_stream: TextIO, number_of_lines: int = 10):
+def print_tail(file_stream: TextIO, number_of_lines: int = 10) -> None:
     stack = []
     lines = reversed(file_stream.readlines())
     for index, line in enumerate(lines, start=1):
@@ -14,7 +14,7 @@ def print_tail(file_stream: TextIO, number_of_lines: int = 10):
         print(stack.pop(), end="")
 
 
-def main(*files: str):
+def main(*files: str) -> None:
     for file in files:
         try:
             with open(file, "r") as f:

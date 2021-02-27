@@ -2,14 +2,14 @@ import sys
 from typing import TextIO
 
 
-def print_head(file_stream: TextIO, number_of_lines: int = 10):
+def print_head(file_stream: TextIO, number_of_lines: int = 10) -> None:
     for index, line in enumerate(file_stream, start=1):
         if index > number_of_lines:
             break
         print(line, end="")
 
 
-def main(*files: str):
+def main(*files: str) -> None:
     for file in files:
         try:
             with open(file, "r") as f:

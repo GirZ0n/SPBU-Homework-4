@@ -10,11 +10,11 @@ class FileInformation:
     number_of_words: int = 0
     number_of_bytes: int = 0
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.number_of_lines} {self.number_of_words} {self.number_of_bytes} {self.file_name}"
 
 
-def get_file_information(file_stream: TextIO):
+def get_file_information(file_stream: TextIO) -> FileInformation:
     info = FileInformation(file_stream.name)
 
     for line in file_stream:
@@ -25,7 +25,7 @@ def get_file_information(file_stream: TextIO):
     return info
 
 
-def main(*files: str):
+def main(*files: str) -> None:
     total = FileInformation("total")
 
     for file in files:

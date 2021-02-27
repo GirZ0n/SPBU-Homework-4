@@ -2,7 +2,7 @@ import sys
 from typing import TextIO
 
 
-def print_with_line_numbers(file_stream: TextIO, start_index: int):
+def print_with_line_numbers(file_stream: TextIO, start_index: int) -> int:
     index = start_index
 
     for line in file_stream:
@@ -14,7 +14,7 @@ def print_with_line_numbers(file_stream: TextIO, start_index: int):
     return index
 
 
-def main(*files: str):
+def main(*files: str) -> None:
     start_index = 1
     for file in files:
         try:
