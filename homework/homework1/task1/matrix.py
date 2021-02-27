@@ -35,7 +35,10 @@ class Matrix:
             raise ValueError("Matrices do not have the same dimensions.")
 
         return Matrix(
-            *[list(map(sum, zip(self.__matrix[i], other.__matrix[i]))) for i in range(self.__number_of_rows())]
+            *[
+                list(map(lambda x, y: x + y, zip(self.__matrix[i], other.__matrix[i])))
+                for i in range(self.__number_of_rows())
+            ]
         )
 
     def __mul__(self, other: "Matrix") -> "Matrix":
