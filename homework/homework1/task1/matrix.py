@@ -35,7 +35,7 @@ class Matrix:
             raise ValueError("Matrices do not have the same dimensions.")
 
         return Matrix(
-            *[[x + y for x, y in zip(self.__matrix[i], other.__matrix[i])] for i in range(self.__number_of_rows())]
+            *[list(map(sum, zip(self.__matrix[i], other.__matrix[i]))) for i in range(self.__number_of_rows())]
         )
 
     def __mul__(self, other: "Matrix") -> "Matrix":
@@ -53,9 +53,7 @@ class Matrix:
         )
 
     def transpose(self) -> "Matrix":
-        return Matrix(
-            *[[self.__matrix[i][j] for i in range(self.__number_of_rows())] for j in range(self.__number_of_columns())]
-        )
+        return Matrix(*[list(x) for x in zip(*self.__matrix)])
 
     def __number_of_columns(self) -> int:
         return len(self.__matrix[0])
