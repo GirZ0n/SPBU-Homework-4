@@ -11,7 +11,7 @@ class FileInformation:
     number_of_bytes: int = 0
 
     def __str__(self) -> str:
-        return f"{self.number_of_lines} {self.number_of_words} {self.number_of_bytes} {self.file_name}"
+        return f"{self.number_of_lines}\t{self.number_of_words}\t{self.number_of_bytes}\t{self.file_name}"
 
 
 def get_file_information(file_stream: TextIO) -> FileInformation:
