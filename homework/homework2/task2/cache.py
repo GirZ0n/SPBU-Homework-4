@@ -1,10 +1,9 @@
 import functools
 from collections import OrderedDict
-from typing import Optional
 
 
-def cache_decorator(func=None, *, size: Optional[int] = None):
-    if size is not None and size <= 0:
+def cache_decorator(func=None, *, size: int = 0):
+    if size <= 0:
         raise ValueError("Size must be a positive number.")
 
     if func is None:
@@ -14,7 +13,7 @@ def cache_decorator(func=None, *, size: Optional[int] = None):
 
     @functools.wraps(func)
     def inner(*args, **kwargs):
-        if size is None:
+        if size == 0:
             return func(*args, **kwargs)
 
         key = make_key(*args, **kwargs)
