@@ -4,7 +4,7 @@ from typing import Optional
 
 
 def cache_decorator(func=None, *, size: Optional[int] = None):
-    if size <= 0:
+    if size is not None and size <= 0:
         raise ValueError("Size must be a positive number.")
 
     if func is None:
