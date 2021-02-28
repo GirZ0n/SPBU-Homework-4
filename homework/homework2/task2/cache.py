@@ -4,10 +4,13 @@ from typing import Optional
 
 
 def cache_decorator(func=None, *, size: Optional[int] = None):
+    if size <= 0:
+        raise ValueError("Size must be a positive number.")
+
     if func is None:
         return lambda f: cache_decorator(f, size=size)
 
-    cache = OrderedDict()
+    cache: OrderedDict = OrderedDict()
 
     @functools.wraps(func)
     def inner(*args, **kwargs):
