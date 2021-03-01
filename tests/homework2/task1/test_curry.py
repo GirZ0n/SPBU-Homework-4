@@ -117,7 +117,6 @@ class TwoArgumentsCurryTestCase(unittest.TestCase):
         with self.assertRaises(TypeError) as context:
             curry_explicit(mul, 2)(-481, -673, -727, 367, -594)
 
-        print(context.exception)
         self.assertTrue("takes 1 positional argument but 5 were given" in str(context.exception))
 
     def test_mul_too_few_positional_arguments(self):
@@ -156,7 +155,6 @@ class ArbitraryNumberOfArgumentsCurryTestCase(unittest.TestCase):
         with self.assertRaises(TypeError) as context:
             curry_explicit(concat, 4)("explosive", "room", "dog", "grammatical", "live")
 
-        print(context.exception)
         self.assertTrue("takes 1 positional argument but 5 were given" in str(context.exception))
 
     def test_concat_too_few_positional_arguments(self):
