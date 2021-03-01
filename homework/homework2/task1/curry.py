@@ -5,9 +5,7 @@ def curry_explicit(function, arity: int):
     if arity == 0:
         return function
 
-    # TODO: Проверить, что указанная арность не больше арности функции
-
-    current_arity = arity
+    arguments_left = arity
 
     args = []
 
@@ -15,14 +13,14 @@ def curry_explicit(function, arity: int):
         nonlocal args
         args.append(arg)
 
-        nonlocal current_arity
-        if current_arity == 1:
+        nonlocal arguments_left
+        if arguments_left == 1:
             result = function(*args)
             args.clear()
-            current_arity = arity
+            arguments_left = arity
             return result
         else:
-            current_arity -= 1
+            arguments_left -= 1
             return inner
 
     return inner
