@@ -1,15 +1,17 @@
-def curry_explicit(function, arity: int):
+from typing import Callable
+
+
+def curry_explicit(function: Callable, arity: int):
     if arity < 0:
-        raise ValueError("Arity cannot be negative")
+        raise ValueError("Arity cannot be negative.")
 
     if arity == 0:
         return function
 
     arguments_left = arity
-
     args = []
 
-    def inner(arg):
+    def curry(arg):
         nonlocal args
         args.append(arg)
 
@@ -21,6 +23,6 @@ def curry_explicit(function, arity: int):
             return result
         else:
             arguments_left -= 1
-            return inner
+            return curry
 
-    return inner
+    return curry
