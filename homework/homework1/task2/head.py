@@ -12,7 +12,7 @@ def print_head(file_stream: TextIO, number_of_lines: int = 10) -> None:
 def main(*files: str) -> None:
     for file in files:
         try:
-            with open(file, "r") as f:
+            with open(file) as f:
                 if len(files) > 1:
                     print(f"==> {f.name} <==")
                 print_head(f)

@@ -19,7 +19,7 @@ def main(*files: str) -> None:
     start_index = 1
     for file in files:
         try:
-            with open(file, "r") as f:
+            with open(file) as f:
                 print_with_line_numbers(f, start_index)
                 f.seek(0)
                 start_index = get_next_start_index(f, start_index)

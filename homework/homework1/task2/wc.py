@@ -30,7 +30,7 @@ def main(*files: str) -> None:
 
     for file in files:
         try:
-            with open(file, "r") as f:
+            with open(file) as f:
                 info = get_file_information(f)
                 total.number_of_lines += info.number_of_lines
                 total.number_of_words += info.number_of_words
