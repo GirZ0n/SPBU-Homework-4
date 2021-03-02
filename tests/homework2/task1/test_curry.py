@@ -126,7 +126,7 @@ class TwoArgumentsCurryTestCase(unittest.TestCase):
         self.assertTrue("missing 1 required positional argument" in str(context.exception))
 
 
-def concat(*args: str):
+def concat(*args: str) -> str:
     return reduce(lambda acc, x: acc + x, args, "")
 
 
