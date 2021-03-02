@@ -12,8 +12,6 @@ def cache_decorator(func=None, *, size: int = 0):
 
     @functools.wraps(func)
     def inner(*args: Hashable, **kwargs: Hashable):
-        inner.cache = OrderedDict()
-
         if size == 0:
             return func(*args, **kwargs)
 
@@ -28,6 +26,8 @@ def cache_decorator(func=None, *, size: int = 0):
         inner.cache[key] = value
 
         return value
+
+    inner.cache = OrderedDict()
 
     def make_key(*args: Hashable, **kwargs: Hashable) -> tuple:
         return args + tuple(sorted(kwargs.items()))
