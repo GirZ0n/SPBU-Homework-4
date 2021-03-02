@@ -2,6 +2,8 @@ from typing import Callable
 
 
 def uncurry_explicit(function: Callable, arity: int):
+    """ The inverse of curry_explicit """
+
     if arity < 0:
         raise ValueError("Arity cannot be negative.")
 

@@ -1,7 +1,11 @@
 from typing import Callable
 
 
-def curry_explicit(function: Callable, arity: int):
+def curry_explicit(function: Callable, arity: int) -> Callable:
+    """
+    Converts a function that takes multiple arguments into a sequence of functions that each take a single argument
+    """
+
     if arity < 0:
         raise ValueError("Arity cannot be negative.")
 
