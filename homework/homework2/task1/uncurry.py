@@ -1,7 +1,7 @@
 from typing import Callable
 
 
-def uncurry_explicit(function: Callable, arity: int):
+def uncurry_explicit(function: Callable, arity: int) -> Callable:
     """ The inverse of curry_explicit """
 
     if arity < 0:
