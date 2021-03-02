@@ -1,11 +1,11 @@
 from math import sqrt, acos, degrees
-from typing import List, Union
+from typing import List
 
 
 class Vector:
-    __elements: List[Union[int, float]]
+    __elements: List[float]
 
-    def __init__(self, *elements: Union[int, float]) -> None:
+    def __init__(self, *elements: float) -> None:
         if not elements:
             raise ValueError("The vector must contain at least one element.")
 
@@ -14,7 +14,7 @@ class Vector:
     def __str__(self) -> str:
         return f"({', '.join(map(str, self.__elements))})"
 
-    def dot(self, other: "Vector") -> Union[int, float]:
+    def dot(self, other: "Vector") -> float:
         if len(self.__elements) != len(other.__elements):
             raise ValueError("The dimensions of the vectors do not match.")
 

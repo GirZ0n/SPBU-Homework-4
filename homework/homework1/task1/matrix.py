@@ -1,12 +1,12 @@
-from typing import List, Union
+from typing import List
 
 from homework.homework1.task1.vector import Vector
 
 
 class Matrix:
-    __matrix: List[List[Union[int, float]]]
+    __matrix: List[List[float]]
 
-    def __init__(self, *matrix: List[Union[int, float]]) -> None:
+    def __init__(self, *matrix: List[float]) -> None:
         if not matrix:
             raise ValueError("Matrix must contain at least one element.")
 
