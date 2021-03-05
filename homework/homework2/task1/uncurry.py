@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def uncurry_explicit(function: Callable, arity: int) -> Callable:
@@ -7,7 +7,7 @@ def uncurry_explicit(function: Callable, arity: int) -> Callable:
     if arity < 0:
         raise ValueError("Arity cannot be negative.")
 
-    def uncurry(*args):
+    def uncurry(*args: Any) -> Callable:
         if len(args) != arity:
             raise TypeError("The number of arguments passed must match the arity.")
 

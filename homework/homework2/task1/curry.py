@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 
 
 def curry_explicit(function: Callable, arity: int) -> Callable:
@@ -15,7 +15,7 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     arguments_left = arity
     args = []
 
-    def curry(arg):
+    def curry(arg: Any) -> Callable:
         nonlocal args
         args.append(arg)
 
