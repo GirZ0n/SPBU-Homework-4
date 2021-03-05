@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from functools import update_wrapper
-from typing import Hashable, Callable, OrderedDict as OrderedDictType
+from typing import Callable, OrderedDict as OrderedDictType, Any
 
 
 # Wraps _Cache to allow for deferred calling
@@ -22,7 +22,7 @@ class _Cache:
         self._cache: OrderedDictType = OrderedDict()
         update_wrapper(self, function)
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
         if self._size == 0:
             return self._function(*args, **kwargs)
 
@@ -39,5 +39,5 @@ class _Cache:
         return value
 
     @staticmethod
-    def __make_key(*args: Hashable, **kwargs: Hashable) -> tuple:
+    def __make_key(*args: Any, **kwargs: Any) -> tuple:
         return args + tuple(sorted(kwargs.items()))
