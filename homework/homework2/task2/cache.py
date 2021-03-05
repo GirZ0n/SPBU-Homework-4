@@ -3,6 +3,18 @@ from functools import update_wrapper
 from typing import Hashable, Callable, OrderedDict as OrderedDictType
 
 
+# Wraps _Cache to allow for deferred calling
+def cache_decorator(func=None, *, size: int = 0):
+    """A simple decorator that caches function values."""
+    if size < 0:
+        raise ValueError("Size must be a non-negative number.")
+
+    if func is None:
+        return lambda f: _Cache(f, size)
+
+    return _Cache(func, size)
+
+
 class _Cache:
     def __init__(self, function: Callable, size: int):
         self._function = function
@@ -29,13 +41,3 @@ class _Cache:
     @staticmethod
     def __make_key(*args: Hashable, **kwargs: Hashable) -> tuple:
         return args + tuple(sorted(kwargs.items()))
-
-
-def cache_decorator(func=None, *, size: int = 0):
-    if size < 0:
-        raise ValueError("Size must be a non-negative number.")
-
-    if func is None:
-        return lambda f: _Cache(f, size)
-
-    return _Cache(func, size)
