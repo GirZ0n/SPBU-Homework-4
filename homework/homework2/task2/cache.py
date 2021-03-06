@@ -5,7 +5,13 @@ from typing import Callable, OrderedDict as OrderedDictType, Any
 
 # Wraps _Cache to allow for deferred calling
 def cache_decorator(func=None, *, size: int = 0):
-    """A simple decorator that caches function values."""
+    """
+    A simple decorator that caches function values.
+
+    :param func: the function whose values need to be cached.
+    :param size: cache size.
+    :return: original function with cache.
+    """
     if size < 0:
         raise ValueError("Size must be a non-negative number.")
 
