@@ -6,6 +6,11 @@ from typing import Callable, Any
 
 class Evaluated:
     def __init__(self, func: Callable):
+        """
+        Substitutes the default value calculated at the time of the call.
+
+        :param func: A function that will calculate the default value before each call.
+        """
         if isinstance(func, Isolated):
             raise ValueError("Isolated cannot be used with Evaluated")
 
@@ -17,6 +22,11 @@ class Evaluated:
 
 class Isolated:
     def __init__(self, arg=None):
+        """
+        Fictitious default value. Make a deep copy while receiving the argument.
+
+        :param arg: The object to be isolated.
+        """
         if isinstance(arg, Evaluated):
             raise ValueError("Evaluated cannot be used with Isolated")
 
@@ -25,6 +35,13 @@ class Isolated:
 
 # Wraps _SmartArgs to allow for deferred calling
 def smart_args(func=None, *, positional_arguments_included: bool = False):
+    """
+    Decorator that parses the default value types of function arguments.
+
+    :param func: Any function that will use smart_args
+    :param positional_arguments_included: Flag responsible for handling positional variables
+    :return: The original function wrapped in the decorator
+    """
     if func is None:
         return lambda f: _SmartArgs(f, positional_arguments_included)
 
@@ -51,7 +68,7 @@ class _SmartArgs:
 
         if self._positional_arguments_included and len(args) > 0:
             args_list = []
-            for index, arg in enumerate(args):
+            for arg in args:
                 elem = arg
                 if isinstance(arg, Isolated):
                     elem = deepcopy(arg.arg)
