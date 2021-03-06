@@ -2,7 +2,13 @@ from typing import Callable, Any
 
 
 def uncurry_explicit(function: Callable, arity: int) -> Callable:
-    """ The inverse of curry_explicit """
+    """
+    The inverse of curry_explicit.
+
+    :param function: Curried function.
+    :param arity: The number of arguments that the original function takes.
+    :return: Original (not curried) function.
+    """
 
     if arity < 0:
         raise ValueError("Arity cannot be negative.")

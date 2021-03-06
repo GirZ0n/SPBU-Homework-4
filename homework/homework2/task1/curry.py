@@ -3,7 +3,11 @@ from typing import Callable, Any
 
 def curry_explicit(function: Callable, arity: int) -> Callable:
     """
-    Converts a function that takes multiple arguments into a sequence of functions that each take a single argument
+    Converts a function that takes multiple arguments into a sequence of functions that each take a single argument.
+
+    :param function: Any function.
+    :param arity: The number of arguments that the function takes.
+    :return: Curried function.
     """
 
     if arity < 0:
