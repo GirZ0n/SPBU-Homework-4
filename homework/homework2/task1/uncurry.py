@@ -5,9 +5,9 @@ def uncurry_explicit(function: Callable, arity: int) -> Callable:
     """
     The inverse of curry_explicit.
 
-    :param function: Curried function.
-    :param arity: The number of arguments that the original function takes.
-    :return: Original (not curried) function.
+    :param function: curried function.
+    :param arity: the number of arguments that the original function takes.
+    :return: original (not curried) function.
     """
 
     if arity < 0:
