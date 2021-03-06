@@ -9,7 +9,7 @@ class Evaluated:
         """
         Substitutes the default value calculated at the time of the call.
 
-        :param func: A function that will calculate the default value before each call.
+        :param func: a function that will calculate the default value before each call.
         """
         if isinstance(func, Isolated):
             raise ValueError("Isolated cannot be used with Evaluated")
@@ -25,7 +25,7 @@ class Isolated:
         """
         Fictitious default value. Make a deep copy while receiving the argument.
 
-        :param arg: The object to be isolated.
+        :param arg: the object to be isolated.
         """
         if isinstance(arg, Evaluated):
             raise ValueError("Evaluated cannot be used with Isolated")
@@ -38,9 +38,9 @@ def smart_args(func=None, *, positional_arguments_included: bool = False):
     """
     Decorator that parses the default value types of function arguments.
 
-    :param func: Any function that will use smart_args
-    :param positional_arguments_included: Flag responsible for handling positional variables
-    :return: The original function wrapped in the decorator
+    :param func: any function that will use smart_args
+    :param positional_arguments_included: flag responsible for handling positional variables
+    :return: the original function wrapped in the decorator
     """
     if func is None:
         return lambda f: _SmartArgs(f, positional_arguments_included)
