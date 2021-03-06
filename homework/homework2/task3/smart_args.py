@@ -1,0 +1,64 @@
+from copy import deepcopy
+from functools import update_wrapper
+from inspect import signature
+from typing import Callable, Any
+
+
+class Evaluated:
+    def __init__(self, func: Callable):
+        if isinstance(func, Isolated):
+            raise ValueError("Isolated cannot be used with Evaluated")
+
+        if len(signature(func).parameters) != 0:
+            raise ValueError("Functions with arguments are not supported by Evaluated")
+
+        self.func = func
+
+
+class Isolated:
+    def __init__(self, arg=None):
+        if isinstance(arg, Evaluated):
+            raise ValueError("Evaluated cannot be used with Isolated")
+
+        self.arg = arg
+
+
+# Wraps _SmartArgs to allow for deferred calling
+def smart_args(func=None, *, positional_arguments_included: bool = False):
+    if func is None:
+        return lambda f: _SmartArgs(f, positional_arguments_included)
+
+    return _SmartArgs(func, positional_arguments_included)
+
+
+class _SmartArgs:
+    def __init__(self, function: Callable, positional_arguments_included: bool):
+        self._function = function
+        self._positional_arguments_included = positional_arguments_included
+        update_wrapper(self, function)
+
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
+        for parameter_name, parameter in signature(self._function).parameters.items():
+            if isinstance(parameter.default, Isolated):
+                if parameter_name in kwargs.keys():
+                    kwargs[parameter_name] = deepcopy(kwargs[parameter_name])
+                else:
+                    raise KeyError(f"Parameter '{parameter_name}' not passed to function")
+
+            if isinstance(parameter.default, Evaluated):
+                if parameter_name not in kwargs.keys():
+                    kwargs[parameter_name] = parameter.default.func()
+
+        if self._positional_arguments_included and len(args) > 0:
+            args_list = []
+            for index, arg in enumerate(args):
+                elem = arg
+                if isinstance(arg, Isolated):
+                    elem = deepcopy(arg.arg)
+                if isinstance(arg, Evaluated):
+                    elem = arg.func()
+
+                args_list.append(elem)
+            args = tuple(args_list)
+
+        return self._function(*args, **kwargs)
