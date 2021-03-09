@@ -1,6 +1,18 @@
 from collections import OrderedDict
+from typing import Dict
 from unittest import TestCase
+
 from homework.homework2.task2.cache import cache_decorator
+
+SIZE_MUST_BE_NON_NEGATIVE = "Size must be a non-negative number."
+
+
+def is_empty(dic: Dict) -> bool:
+    return len(dic) == 0
+
+
+def check_message(context, expected_message: str) -> bool:
+    return expected_message in str(context.exception)
 
 
 class CacheFunctionWithOneArgumentTestCase(TestCase):
@@ -13,7 +25,7 @@ class CacheFunctionWithOneArgumentTestCase(TestCase):
                     return 1
                 return fib(n - 1) + fib(n - 2)
 
-        self.assertTrue("Size must be a non-negative number." in str(context.exception))
+        self.assertTrue(check_message(context, SIZE_MUST_BE_NON_NEGATIVE))
 
     def test_zero_size_cache(self):
         @cache_decorator
@@ -26,7 +38,7 @@ class CacheFunctionWithOneArgumentTestCase(TestCase):
         fib(6)
         fib(7)
 
-        self.assertFalse(fib._cache)
+        self.assertTrue(is_empty(fib._cache))
 
     def test_positive_size_cache(self):
         @cache_decorator(size=10)
@@ -38,8 +50,6 @@ class CacheFunctionWithOneArgumentTestCase(TestCase):
         fib(10)
         fib(9)
         fib(8)
-
-        print(fib._cache)
 
         self.assertEqual(
             fib._cache,
@@ -68,7 +78,7 @@ class CacheFunctionWithArgsTestCase(TestCase):
             def sum_of_squares(*args: int) -> int:
                 return sum(x ** 2 for x in args)
 
-        self.assertTrue("Size must be a non-negative number." in str(context.exception))
+        self.assertTrue(check_message(context, SIZE_MUST_BE_NON_NEGATIVE))
 
     def test_zero_size_cache(self):
         @cache_decorator
@@ -79,7 +89,7 @@ class CacheFunctionWithArgsTestCase(TestCase):
         sum_of_squares(6, 7, 8)
         sum_of_squares(9, 10, 11)
 
-        self.assertFalse(sum_of_squares._cache)
+        self.assertTrue(is_empty(sum_of_squares._cache))
 
     def test_positive_size_cache(self):
         @cache_decorator(size=10)
@@ -117,7 +127,7 @@ class CacheFunctionWithOneKeywordArgument(TestCase):
                     return 1
                 return fib(n=n - 1) + fib(n=n - 2)
 
-        self.assertTrue("Size must be a non-negative number." in str(context.exception))
+        self.assertTrue(check_message(context, SIZE_MUST_BE_NON_NEGATIVE))
 
     def test_zero_size_cache(self):
         @cache_decorator
@@ -130,7 +140,7 @@ class CacheFunctionWithOneKeywordArgument(TestCase):
         fib(n=9)
         fib(n=8)
 
-        self.assertFalse(fib._cache)
+        self.assertTrue(is_empty(fib._cache))
 
     def test_positive_size_cache(self):
         @cache_decorator(size=10)
@@ -170,7 +180,7 @@ class CacheFunctionWithKwargsTestCase(TestCase):
             def sum_of_squares(**kwargs: int) -> int:
                 return sum(x ** 2 for _, x in kwargs.items())
 
-        self.assertTrue("Size must be a non-negative number." in str(context.exception))
+        self.assertTrue(check_message(context, SIZE_MUST_BE_NON_NEGATIVE))
 
     def test_zero_size_cache(self):
         @cache_decorator
@@ -181,7 +191,7 @@ class CacheFunctionWithKwargsTestCase(TestCase):
         sum_of_squares(a=6, b=7, c=8)
         sum_of_squares(a=9, b=10, c=11)
 
-        self.assertFalse(sum_of_squares._cache)
+        self.assertTrue(is_empty(sum_of_squares._cache))
 
     def test_positive_size_cache(self):
         @cache_decorator(size=10)
@@ -200,8 +210,6 @@ class CacheFunctionWithKwargsTestCase(TestCase):
         sum_of_squares(a=4, b=5, c=3)
         sum_of_squares(a=5, b=3, c=4)
         sum_of_squares(a=5, b=4, c=3)
-
-        print(sum_of_squares._cache)
 
         self.assertEqual(
             sum_of_squares._cache,
