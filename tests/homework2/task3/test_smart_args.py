@@ -5,6 +5,10 @@ from unittest import TestCase
 from homework.homework2.task3.smart_args import smart_args, Evaluated, Isolated
 
 
+def check_message(context, expected_message: str) -> bool:
+    return expected_message in str(context.exception)
+
+
 class SmartArgsTestCase(TestCase):
     def test_isolated_inside_evaluated(self):
         with self.assertRaises(ValueError) as context:
@@ -13,7 +17,7 @@ class SmartArgsTestCase(TestCase):
             def check(*, arg=Evaluated(Isolated())):
                 pass
 
-        self.assertTrue("Isolated cannot be used with Evaluated" in str(context.exception))
+        self.assertTrue(check_message(context, "Isolated cannot be used with Evaluated"))
 
     def test_evaluated_inside_isolated(self):
         with self.assertRaises(ValueError) as context:
@@ -22,7 +26,7 @@ class SmartArgsTestCase(TestCase):
             def check(*, arg=Isolated(Evaluated(lambda: 42))):
                 pass
 
-        self.assertTrue("Evaluated cannot be used with Isolated" in str(context.exception))
+        self.assertTrue(check_message(context, "Evaluated cannot be used with Isolated"))
 
     def test_function_with_params_as_argument_of_evaluated(self):
         with self.assertRaises(ValueError) as context:
@@ -31,7 +35,7 @@ class SmartArgsTestCase(TestCase):
             def check(*, arg=Evaluated(lambda x, y, z: 42)):
                 pass
 
-        self.assertTrue("Functions with arguments are not supported by Evaluated" in str(context.exception))
+        self.assertTrue(check_message(context, "Functions with arguments are not supported by Evaluated"))
 
     def test_isolated_keyword_argument(self):
         @smart_args
