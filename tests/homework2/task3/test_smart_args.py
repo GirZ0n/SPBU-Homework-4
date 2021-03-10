@@ -3,10 +3,7 @@ from time import sleep
 from unittest import TestCase
 
 from homework.homework2.task3.smart_args import smart_args, Evaluated, Isolated
-
-
-def check_message(context, expected_message: str) -> bool:
-    return expected_message in str(context.exception)
+from tests.tests_utils import check_message
 
 
 class SmartArgsTestCase(TestCase):
