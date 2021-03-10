@@ -59,7 +59,7 @@ class _SmartArgs:
             if isinstance(parameter.default, Isolated):
                 if parameter_name in kwargs.keys():
                     kwargs[parameter_name] = deepcopy(kwargs[parameter_name])
-                else:
+                elif not self._positional_arguments_included:
                     raise KeyError(f"Parameter '{parameter_name}' not passed to function")
 
             if isinstance(parameter.default, Evaluated):
