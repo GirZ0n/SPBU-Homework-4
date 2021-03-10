@@ -17,9 +17,6 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
         if arity == 0:
             return function
 
-        if arguments is None:
-            arguments = []
-
         def curry(arg: Any) -> Callable:
             if len(arguments) + 1 < arity:
                 return __inner([*arguments, arg])
