@@ -1,4 +1,4 @@
-from typing import Callable, Any, List
+from typing import Callable, Any
 
 
 def curry_explicit(function: Callable, arity: int) -> Callable:
@@ -10,7 +10,7 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     :return: curried function.
     """
 
-    def __inner(arguments: List = None) -> Callable:
+    def __inner(arguments: list = None) -> Callable:
         if arity < 0:
             raise ValueError("Arity cannot be negative.")
 
