@@ -18,7 +18,7 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     if arity == 0:
         return function
 
-    def __inner(arguments: List) -> Callable:
+    def __inner(arguments: List):
         if arity == len(arguments):
             return function(*arguments)
 
