@@ -1,7 +1,5 @@
 from typing import Callable, Any, List
 
-from homework.homework2.task1.uncurry import uncurry_explicit
-
 
 def curry_explicit(function: Callable, arity: int) -> Callable:
     """
