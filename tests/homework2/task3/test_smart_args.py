@@ -48,17 +48,6 @@ class SmartArgsTestCase(TestCase):
 
         self.assertEqual(input_list, [-644, 883, 796, -608, -985])
 
-    def test_isolated_positional_argument(self):
-        @smart_args(positional_arguments_included=True)
-        def list_sort(input_list, /):
-            input_list.sort()
-
-        input_list = [839, 739, -923, -293, 229]
-
-        list_sort(Isolated(input_list))
-
-        self.assertEqual(input_list, [839, 739, -923, -293, 229])
-
     def test_evaluated_keyword_argument(self):
         def get_timestamp():
             return datetime.datetime.now().timestamp()
@@ -72,17 +61,3 @@ class SmartArgsTestCase(TestCase):
         x2, y2 = check()
 
         self.assertTrue(x1 == x2 and y1 < y2)
-
-    def test_evaluated_positional_argument(self):
-        def get_timestamp():
-            return datetime.datetime.now().timestamp()
-
-        @smart_args(positional_arguments_included=True)
-        def check(x, /):
-            return x
-
-        x1 = check(Evaluated(get_timestamp))
-        sleep(0.001)
-        x2 = check(Evaluated(get_timestamp))
-
-        self.assertTrue(x1 < x2)
