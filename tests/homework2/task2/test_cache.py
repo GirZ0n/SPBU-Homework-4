@@ -69,6 +69,19 @@ class CacheFunctionWithOneArgumentTestCase(TestCase):
             ),
         )
 
+    def test_cache_size_is_smaller_than_function_needs(self):
+        @cache_decorator(size=5)
+        def fib(n: int) -> int:
+            if n == 1 or n == 2:
+                return 1
+            return fib(n - 1) + fib(n - 2)
+
+        fib(10)
+        fib(9)
+        fib(8)
+
+        self.assertEqual(fib._cache, OrderedDict([((6,), 8), ((7,), 13), ((8,), 21), ((9,), 34), ((10,), 55)]))
+
 
 class CacheFunctionWithArgsTestCase(TestCase):
     def test_negative_size_cache(self):
@@ -115,6 +128,20 @@ class CacheFunctionWithArgsTestCase(TestCase):
                 [((3, 4, 5), 50), ((3, 5, 4), 50), ((4, 3, 5), 50), ((4, 5, 3), 50), ((5, 3, 4), 50), ((5, 4, 3), 50)]
             ),
         )
+
+    def test_cache_size_is_smaller_than_function_needs(self):
+        @cache_decorator(size=3)
+        def sum_of_squares(*args: int) -> int:
+            return sum(x ** 2 for x in args)
+
+        sum_of_squares(3, 4, 5)
+        sum_of_squares(3, 5, 4)
+        sum_of_squares(4, 3, 5)
+        sum_of_squares(4, 5, 3)
+        sum_of_squares(5, 3, 4)
+        sum_of_squares(5, 4, 3)
+
+        self.assertEqual(sum_of_squares._cache, OrderedDict([((4, 5, 3), 50), ((5, 3, 4), 50), ((5, 4, 3), 50)]))
 
 
 class CacheFunctionWithOneKeywordArgument(TestCase):
@@ -171,6 +198,24 @@ class CacheFunctionWithOneKeywordArgument(TestCase):
             ),
         )
 
+    def test_cache_size_is_smaller_than_function_needs(self):
+        @cache_decorator(size=5)
+        def fib(*, n: int) -> int:
+            if n == 1 or n == 2:
+                return 1
+            return fib(n=n - 1) + fib(n=n - 2)
+
+        fib(n=10)
+        fib(n=9)
+        fib(n=8)
+
+        self.assertEqual(
+            fib._cache,
+            OrderedDict(
+                [((("n", 6),), 8), ((("n", 7),), 13), ((("n", 8),), 21), ((("n", 9),), 34), ((("n", 10),), 55)]
+            ),
+        )
+
 
 class CacheFunctionWithKwargsTestCase(TestCase):
     def test_negative_size_cache(self):
@@ -218,6 +263,29 @@ class CacheFunctionWithKwargsTestCase(TestCase):
                     ((("a", 3), ("b", 4), ("c", 5)), 50),
                     ((("a", 3), ("b", 5), ("c", 4)), 50),
                     ((("a", 4), ("b", 3), ("c", 5)), 50),
+                    ((("a", 4), ("b", 5), ("c", 3)), 50),
+                    ((("a", 5), ("b", 3), ("c", 4)), 50),
+                    ((("a", 5), ("b", 4), ("c", 3)), 50),
+                ]
+            ),
+        )
+
+    def test_cache_size_is_smaller_than_function_needs(self):
+        @cache_decorator(size=3)
+        def sum_of_squares(**kwargs: int) -> int:
+            return sum(x ** 2 for _, x in kwargs.items())
+
+        sum_of_squares(a=3, b=4, c=5)
+        sum_of_squares(a=3, b=5, c=4)
+        sum_of_squares(a=4, b=3, c=5)
+        sum_of_squares(a=4, b=5, c=3)
+        sum_of_squares(a=5, b=3, c=4)
+        sum_of_squares(a=5, b=4, c=3)
+
+        self.assertEqual(
+            sum_of_squares._cache,
+            OrderedDict(
+                [
                     ((("a", 4), ("b", 5), ("c", 3)), 50),
                     ((("a", 5), ("b", 3), ("c", 4)), 50),
                     ((("a", 5), ("b", 4), ("c", 3)), 50),
