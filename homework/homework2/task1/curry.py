@@ -11,14 +11,14 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     """
 
     def __inner(arguments: list = None) -> Callable:
+        if arguments is None:
+            arguments = []
+
         if arity < 0:
             raise ValueError("Arity cannot be negative.")
 
         if arity == 0:
             return function
-
-        if arguments is None:
-            arguments = []
 
         def curry(arg: Any) -> Callable:
             if len(arguments) + 1 < arity:
