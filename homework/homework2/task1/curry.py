@@ -1,5 +1,7 @@
 from typing import Callable, Any, List
 
+from homework.homework2.task1.uncurry import uncurry_explicit
+
 
 def curry_explicit(function: Callable, arity: int) -> Callable:
     """
@@ -10,18 +12,18 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
     :return: curried function.
     """
 
-    def __inner(arguments: List) -> Callable:
-        if arity < 0:
-            raise ValueError("Arity cannot be negative.")
+    if arity < 0:
+        raise ValueError("Arity cannot be negative.")
 
-        if arity == 0:
-            return function
+    if arity == 0:
+        return function
+
+    def __inner(arguments: List) -> Callable:
+        if arity == len(arguments):
+            return function(*arguments)
 
         def curry(arg: Any) -> Callable:
-            if len(arguments) + 1 < arity:
-                return __inner([*arguments, arg])
-            else:
-                return function(*arguments, arg)
+            return __inner([*arguments, arg])
 
         return curry
 
