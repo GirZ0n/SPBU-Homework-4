@@ -3,14 +3,11 @@ from functools import reduce
 
 from homework.homework2.task1.curry import curry_explicit
 from homework.homework2.task1.uncurry import uncurry_explicit
+from tests.tests_utils import check_message
 
 ARITY_CANNOT_BE_NEGATIVE = "Arity cannot be negative."
 OBJECT_IS_NOT_CALLABLE = "object is not callable"
 NUMBER_OF_ARGUMENTS_PASSED_MUST_MATCH_ARITY = "The number of arguments passed must match the arity."
-
-
-def check_message(context, expected_message: str) -> bool:
-    return expected_message in str(context.exception)
 
 
 def const() -> int:

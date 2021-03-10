@@ -2,14 +2,11 @@ import unittest
 from functools import reduce
 
 from homework.homework2.task1.curry import curry_explicit
+from tests.tests_utils import check_message
 
 ARITY_CANNOT_BE_NEGATIVE = "Arity cannot be negative."
 OBJECT_IS_NOT_CALLABLE = "object is not callable"
 MISSING_1_REQUIRED_POSITIONAL_ARGUMENT = "missing 1 required positional argument"
-
-
-def check_message(context, expected_message: str) -> bool:
-    return expected_message in str(context.exception)
 
 
 def const() -> int:
