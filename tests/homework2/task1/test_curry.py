@@ -168,3 +168,9 @@ class ArbitraryNumberOfArgumentsCurryTestCase(unittest.TestCase):
             curry_explicit(concat, 4)()("broad")()("film")
 
         self.assertTrue(check_message(context, MISSING_1_REQUIRED_POSITIONAL_ARGUMENT))
+
+    def test_concat_zero_arity(self):
+        with self.assertRaises(TypeError) as context:
+            curry_explicit(concat, 0)(5)
+
+        self.assertTrue(check_message(context, "takes 0 positional arguments but 1 was given"))
