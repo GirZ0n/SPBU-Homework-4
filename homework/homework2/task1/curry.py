@@ -14,7 +14,7 @@ def curry_explicit(function: Callable, arity: int) -> Callable:
         raise ValueError("Arity cannot be negative.")
 
     if arity == 0:
-        return function
+        return lambda: function()
 
     def __inner(arguments: List):
         if arity == len(arguments):
