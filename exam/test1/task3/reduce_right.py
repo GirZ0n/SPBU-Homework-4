@@ -1,7 +1,7 @@
 from typing import Optional, Callable, Any
 
 
-def reduce_right(function: Callable, values: Any, initial: Optional = None) -> Any:
+def reduce_right(function: Callable, values: Any, initial: Optional[Any] = None) -> Any:
     elements = [element for element in values]
 
     if initial is not None:
