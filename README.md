@@ -9,6 +9,15 @@ Here you can find conditions and solutions to problems for the fourth semester
 
 ## Homework
 
+### Homework №1
+1. Реализовать функции для работы с векторами (скалярное произведение, вычисление длины, нахождение угла между ними) и матрицами (транспонирование, сложение, произведение). Где возможно, реализовать "в одну строчку".
+
+	[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework1/task1)
+
+2. Реализовать функции, имитирующие работу bash команд --- wc, nl, head, tail.
+
+	[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework1/task2) 
+
 ### Homework №2
 1. **Каррирование**
 
@@ -33,13 +42,13 @@ Here you can find conditions and solutions to problems for the fourth semester
     print(g2(123, 456, 562))  # <123, 456, 562>
     ```
 
-    [Solution](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework2/task1)
+    [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework2/task1)
     
 2. **Кэширование**
     
     Реализовать декоратор для кеширования результатов выполнения функции. То есть необходимо сохранять результаты вычислений для разного набора аргументов функции. Аргумент декоратора -- сколько последних результатов хранить. По умолчанию ничего не кэшируется. Необходимо поддержать как неименованные аргументы, так и именованные.
 
-    [Solution](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework2/task2/cache.py)
+    [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework2/task2/cache.py)
     
 3. **Типы аргументов**
 	
@@ -89,7 +98,7 @@ Here you can find conditions and solutions to problems for the fourth semester
     check_evaluation()  # 15 51
     check_evaluation(y=150)  # 15 150
     ```
-    [Solution](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework2/task3/smart_args.py)
+    [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework2/task3/smart_args.py)
 
 ### Homework №3
 1. **Анализ таблицы**:
@@ -101,4 +110,4 @@ Here you can find conditions and solutions to problems for the fourth semester
 
 2. **Визуализация**: необходимо построить по данным таблицам 10 различных графиков.
 
-[Solution](https://datalore.jetbrains.com/notebook/YW5XF5gfYleLNLqFsI0Y9D/QuC3g58oq1vcLdGZWbhvti)
+[[Solution]](https://datalore.jetbrains.com/notebook/YW5XF5gfYleLNLqFsI0Y9D/QuC3g58oq1vcLdGZWbhvti)
