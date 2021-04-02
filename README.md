@@ -9,6 +9,97 @@ Here you can find conditions and solutions to problems for the fourth semester
 
 ## Homework
 
+### Homework №1
+1. Реализовать функции для работы с векторами (скалярное произведение, вычисление длины, нахождение угла между ними) и матрицами (транспонирование, сложение, произведение). Где возможно, реализовать "в одну строчку".
+
+	[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework1/task1)
+
+2. Реализовать функции, имитирующие работу bash команд --- wc, nl, head, tail.
+
+	[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework1/task2) 
+
+### Homework №2
+1. **Каррирование**
+
+    **Частичное применение** (каррирование, curry) --- это превращение функции от нескольких параметров в функцию от одного параметра, возвращающую функцию от остальных параметров. К ней существует обратная операция -- uncarry. В Python каррирование в таком виде затруднено из-за произвольной арности.
+
+    Напишите функцию `curry_explicit(function, arity)` и парную к ней `uncurry_explicit(function, arity)`.
+
+    Требования\допущения:
+    * Пользователь верно указал арность переданной функции. 
+    * Если он ошибся, то бросить исключение. Можно [здесь](https://docs.python.org/3/tutorial/errors.html) посмотреть что это и как с этим работать. Здесь имеется в виду отслеживание простых ситуаций вида: пользователь указал, что функция от 1 аргумента, а передает 5 или же передает аргументы и указывает, что арность -- ноль. **НЕ** требуется проверки, действительно ли передана функция от трех аргументов, если передали арность = 3.
+    * Отрицательная арность невозможна -- бросить исключение.
+    * При арности 0 результатом будет функция от 0 параметров: `curry_explicit(f,0)() == f()`.
+    * При арности 1 -- функция от 1 параметра:  `curry_explicit(f,1)(x) == f(x)`.
+    * Не забудьте, что есть произвольно-арные функции, такие как `print()`; `curry_explicit` должна замораживать их арность, т.е. нельзя написать `curry_explicit(print,2)(1)(2)(3,4,5)`. В данном случае `curry_explicit(print,2)(1)(2)` вернет `None`, что сделает невозможным дальнейшее применение (Python сам бросит ошибку, данный кейс отдельно обрабатывать не нужно)
+    * Именованные аргументы поддерживать не нужно.
+
+    Пример работы:
+    ```python
+    f2 = curry_explicit((lambda x, y, z: f'<{x}, {y}, {z}>'), 3)
+    g2 = uncurry_explicit(f2, 3)
+    print(f2(123)(456)(562))  # <123, 456, 562>
+    print(g2(123, 456, 562))  # <123, 456, 562>
+    ```
+
+    [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework2/task1)
+    
+2. **Кэширование**
+    
+    Реализовать декоратор для кеширования результатов выполнения функции. То есть необходимо сохранять результаты вычислений для разного набора аргументов функции. Аргумент декоратора -- сколько последних результатов хранить. По умолчанию ничего не кэшируется. Необходимо поддержать как неименованные аргументы, так и именованные.
+
+    [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework2/task2/cache.py)
+    
+3. **Типы аргументов**
+	
+    Напишите декоратор `@smart_args`, который анализирует типы значений по умолчанию аргументов функции и, в зависимости от этого, копирует и/или вычисляет их перед выполнением функции:
+    * **`Evaluated(func_without_args)`** --- подставляет значение по умолчанию, вычисляемое в момент вызова. В качестве аргумента принимает функцию БЕЗ аргументов, которая что-то возвращает. Например она может менять глобальный счетчик или что-то считать внутри класса. Во время работы необходимо вызвать эту функцию и использовать значение, которое будет получено в результате выполнения.
+    * **`Isolated()`** --- это фиктивное значение по умолчанию; аргумент должен быть передан, но в момент передачи -- скопирован (глубокая копия).
+
+    Также напишите определения **`Evaluated`** и **`Isolated`**.
+
+    Требования\допущения:
+    * Необходима поддержка только именованных аргументов.
+    * Не нужно сочетать **`Isolated`** и **`Evaluated`**. 
+    * Добавьте проверки (`assert`) того, что пользователь случайно не вышел за эти рамки (использует **`Isolated`** и **`Evaluated`** в сочетании или пытается их использовать для позиционных аргументов).
+
+    Примеры работы:
+
+    Для **`Isolated`**:
+    ```python
+    @smart_args
+    def check_isolation(*, d=Isolated()):
+      d['a'] = 0
+      return d
+
+    no_mutable = {'a': 10}
+
+    print(check_isolation(d=no_mutable))  # {'a': 0}
+    print(no_mutable)  # {'a': 10}
+    ```
+    
+    Для **`Evaluated`**:
+    ```python
+    import random
+
+    def get_random_number():
+       return random.randint(0,100)
+
+    # Для x дефолтное значение всегда будет одинаковое, оно вычислится один раз
+    # Для y дефолтное значение может быть разным, так как оно будет
+    # вычисляться КАЖДЫЙ раз, если не передано значение y
+    @smart_args
+    def check_evaluation(*, x=get_random_number(), y=Evaluated(get_random_number)):
+       print(x, y)
+
+
+    check_evaluation()  # 15 36
+    check_evaluation()  # 15 66
+    check_evaluation()  # 15 51
+    check_evaluation(y=150)  # 15 150
+    ```
+    [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework2/task3/smart_args.py)
+
 ### Homework №3
 1. **Анализ таблицы**:
     1. Визуализировать базовую статистику таблицы. В каком классе было больше всего пассажиров?
@@ -19,7 +110,7 @@ Here you can find conditions and solutions to problems for the fourth semester
 
 2. **Визуализация**: необходимо построить по данным таблицам 10 различных графиков.
 
-[Solution](https://datalore.jetbrains.com/notebook/YW5XF5gfYleLNLqFsI0Y9D/QuC3g58oq1vcLdGZWbhvti)
+[[Solution]](https://datalore.jetbrains.com/notebook/YW5XF5gfYleLNLqFsI0Y9D/QuC3g58oq1vcLdGZWbhvti)
 
 ### Homework №4
 1. **Подготовка данных**:
@@ -38,4 +129,4 @@ Here you can find conditions and solutions to problems for the fourth semester
         * Тип ириса вы берете из оригинальных данных
         * Тип ириса вы берете из предсказанных данных
 
-[Solution](https://datalore.jetbrains.com/notebook/YW5XF5gfYleLNLqFsI0Y9D/urEXnJcXEtFlfB4FwRlEQD)
+[[Solution]](https://datalore.jetbrains.com/notebook/YW5XF5gfYleLNLqFsI0Y9D/urEXnJcXEtFlfB4FwRlEQD)
