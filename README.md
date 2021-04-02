@@ -39,7 +39,7 @@ Here you can find conditions and solutions to problems for the fourth semester
     
     Реализовать декоратор для кеширования результатов выполнения функции. То есть необходимо сохранять результаты вычислений для разного набора аргументов функции. Аргумент декоратора -- сколько последних результатов хранить. По умолчанию ничего не кэшируется. Необходимо поддержать как неименованные аргументы, так и именованные.
 
-    [Solution](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework2/task2)
+    [Solution](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework2/task2/cache.py)
     
 3. **Типы аргументов**
 	
@@ -89,7 +89,7 @@ Here you can find conditions and solutions to problems for the fourth semester
     check_evaluation()  # 15 51
     check_evaluation(y=150)  # 15 150
     ```
-    [Solution](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework2/task3)
+    [Solution](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework2/task3/smart_args.py)
 
 ### Homework №3
 1. **Анализ таблицы**:
