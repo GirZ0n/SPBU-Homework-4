@@ -1,18 +1,23 @@
 from copy import deepcopy
 from random import random
-from typing import Tuple, Optional, Any, Generic
+from typing import Tuple, Optional, Any
+from json import dumps, JSONEncoder, JSONDecoder
 
 
 class Node:
-    key: float
-    value: Any
-
     priority: float
 
     left_child: Optional["Node"] = None
     right_child: Optional["Node"] = None
 
-    def __init__(self, key: float, value: Any, priority: Optional[float] = None):
+    def __init__(
+        self,
+        key,
+        value,
+        priority: Optional[float] = None,
+        left_child: Optional["Node"] = None,
+        right_child: Optional["Node"] = None,
+    ):
         self.key = key
         self.value = value
 
@@ -21,22 +26,24 @@ class Node:
         else:
             self.priority = priority
 
+        self.left_child = left_child
+        self.right_child = right_child
+
     def __str__(self):
-        """
-        Converts Node to json string.
+        return dumps(self, allow_nan=True, cls=self.NodeEncoder)
 
-        :return: json string.
-        """
+    def __eq__(self, other):
+        if isinstance(other, Node):
+            return (
+                self.key == other.key
+                and self.value == other.value
+                and self.priority == other.priority
+                and self.left_child == other.left_child
+                and self.right_child == other.right_child
+            )
+        return False
 
-        left_child_json = str(self.left_child) if self.left_child is not None else "null"
-        right_child_json = str(self.right_child) if self.right_child is not None else "null"
-
-        return (
-                f'{{"key": {self.key}, "data": {self.value}, "priority": {self.priority}, '
-                + f'"left": {left_child_json}, "right": {right_child_json} }}'
-        )
-
-    def __contains__(self, key: float) -> bool:
+    def __contains__(self, key) -> bool:
         if self.key == key:
             return True
 
@@ -62,7 +69,7 @@ class Node:
             yield from self.right_child
         yield self.value
 
-    def insert(self, key: float, value: Any, priority: Optional[float] = None) -> "Node":
+    def insert(self, key, value, priority: Optional[float] = None) -> "Node":
         new_node = Node(key, value, priority)
 
         left_split, right_split = self.__split(key)
@@ -73,7 +80,7 @@ class Node:
             left_split = left_split.__merge(new_node)
             return left_split.__merge(right_split)
 
-    def get(self, key: float) -> Any:
+    def get(self, key) -> Any:
         if self.key == key:
             return self.value
 
@@ -83,7 +90,7 @@ class Node:
         if self.right_child is not None and key > self.key:
             return self.right_child.get(key)
 
-    def update(self, key: float, new_value: Any):
+    def update(self, key, new_value):
         if self.key == key:
             self.value = new_value
 
@@ -93,7 +100,7 @@ class Node:
         if self.right_child is not None and key > self.key:
             self.right_child.update(key, new_value)
 
-    def remove(self, key: float) -> Optional["Node"]:
+    def remove(self, key) -> Optional["Node"]:
         left_subtree, right_subtree = self.__split(key)
 
         if right_subtree is not None:
@@ -113,7 +120,7 @@ class Node:
         self.left_child = self.left_child.__remove_smallest()
         return deepcopy(self)
 
-    def __split(self, key: float) -> Tuple[Optional["Node"], Optional["Node"]]:
+    def __split(self, key) -> Tuple[Optional["Node"], Optional["Node"]]:
         if key > self.key:
             if self.right_child is None:
                 return deepcopy(self), None
@@ -151,3 +158,16 @@ class Node:
             else:
                 result.left_child = self.__merge(other.left_child)
             return result
+
+    class NodeEncoder(JSONEncoder):
+        def default(self, obj):
+            if isinstance(obj, Node):
+                return obj.__dict__
+            return JSONEncoder.default(self, obj)
+
+    class NodeDecoder(JSONDecoder):
+        def __init__(self, *args, **kwargs):
+            JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
+
+        def object_hook(self, dct):
+            return Node(**dct)
