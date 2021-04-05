@@ -1,11 +1,10 @@
-import json
 import unittest
 from pathlib import Path
 
 from homework.homework5.treap import Treap
 from tests.tests_utils import check_message
 
-resources = Path("./resources")
+resources = Path("tests/homework5/resources")
 
 
 def create_full_treap() -> Treap:

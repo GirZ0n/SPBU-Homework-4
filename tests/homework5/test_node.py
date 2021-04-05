@@ -4,7 +4,7 @@ from pathlib import Path
 
 from homework.homework5.node import Node
 
-resources = Path("./resources")
+resources = Path("tests/homework5/resources")
 
 
 def create_full_node() -> Node:
