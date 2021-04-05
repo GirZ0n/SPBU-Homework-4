@@ -1,9 +1,7 @@
-from abc import abstractmethod, ABCMeta
 from collections.abc import MutableMapping
-from json import JSONDecoder, JSONEncoder, dumps
-from typing import Optional, TypeVar, Generic, Iterator, Any
+from typing import Optional, Iterator, Any
 
-from node import Node
+from homework.homework5.node import Node
 
 
 class Treap(MutableMapping):
