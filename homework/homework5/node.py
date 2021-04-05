@@ -64,9 +64,9 @@ class Node:
 
     def __reversed__(self):
         if self.left_child is not None:
-            yield from self.left_child
+            yield from reversed(self.left_child)
         if self.right_child is not None:
-            yield from self.right_child
+            yield from reversed(self.right_child)
         yield self.value
 
     def insert(self, key, value, priority: Optional[float] = None) -> "Node":
