@@ -115,46 +115,46 @@ class Node:
 
     def __remove_smallest(self) -> Optional["Node"]:
         if self.left_child is None:
-            return deepcopy(self.right_child)
+            return self.right_child
 
         self.left_child = self.left_child.__remove_smallest()
-        return deepcopy(self)
+        return self
 
     def __split(self, key) -> Tuple[Optional["Node"], Optional["Node"]]:
         if key > self.key:
             if self.right_child is None:
-                return deepcopy(self), None
+                return self, None
 
             left_subtree, right_subtree = self.right_child.__split(key)
 
-            result = deepcopy(self)
+            result = self
             result.right_child = left_subtree
             return result, right_subtree
         else:
             if self.left_child is None:
-                return None, deepcopy(self)
+                return None, self
 
             left_tree, right_tree = self.left_child.__split(key)
 
-            result = deepcopy(self)
+            result = self
             result.left_child = right_tree
             return left_tree, result
 
     def __merge(self, other: Optional["Node"]) -> "Node":
         if other is None:
-            return deepcopy(self)
+            return self
 
         if self.priority > other.priority:
-            result = deepcopy(self)
+            result = self
             if self.right_child is None:
-                result.right_child = deepcopy(other)
+                result.right_child = other
             else:
                 result.right_child = self.right_child.__merge(other)
             return result
         else:
-            result = deepcopy(other)
+            result = other
             if other.left_child is None:
-                result.left_child = deepcopy(self)
+                result.left_child = self
             else:
                 result.left_child = self.__merge(other.left_child)
             return result
