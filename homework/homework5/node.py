@@ -84,29 +84,29 @@ class Node:
         if self.key == key:
             return self.value
 
-        if self.left_child is not None and key < self.key:
+        if (self.left_child is not None) and (key < self.key):
             return self.left_child.get(key)
 
-        if self.right_child is not None and key > self.key:
+        if (self.right_child is not None) and (key > self.key):
             return self.right_child.get(key)
 
     def update(self, key, new_value):
         if self.key == key:
             self.value = new_value
 
-        if self.left_child is not None and key < self.key:
+        if (self.left_child is not None) and (key < self.key):
             self.left_child.update(key, new_value)
 
-        if self.right_child is not None and key > self.key:
+        if (self.right_child is not None) and (key > self.key):
             self.right_child.update(key, new_value)
 
     def remove(self, key) -> Optional["Node"]:
         left_subtree, right_subtree = self.__split(key)
 
-        if right_subtree is not None:
-            right_subtree = right_subtree.__remove_smallest()
-        else:
+        if right_subtree is None:
             return left_subtree
+        else:
+            right_subtree = right_subtree.__remove_smallest()
 
         if left_subtree is None:
             return right_subtree
