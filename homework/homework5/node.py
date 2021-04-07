@@ -171,10 +171,10 @@ class Node:
 
     def __split(self, key: KT) -> Tuple[Optional["Node"], Optional["Node"]]:
         """
-        Splits the node by key.
+        Splits the node by key. The left node has all the keys smaller than the given key,
+        and the right node has all the others.
 
-        :return: the left node has all the keys smaller than the given key,
-                 and the right node has all the others.
+        :return: two nodes.
         """
         if key > self.key:
             if self.right_child is None:
