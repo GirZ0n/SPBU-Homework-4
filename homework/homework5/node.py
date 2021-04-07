@@ -1,7 +1,10 @@
 from random import random
 from typing import Tuple, Optional, Any, Iterator
 from json import dumps, JSONEncoder, JSONDecoder
-from homework.homework5.treap import KT, VT, PT
+
+KT = float
+VT = Any
+PT = float
 
 
 class Node:

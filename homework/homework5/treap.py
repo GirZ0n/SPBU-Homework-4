@@ -1,11 +1,7 @@
 from collections.abc import MutableMapping
 from typing import Optional, Iterator, Any
 
-from homework.homework5.node import Node
-
-KT = float
-VT = Any
-PT = float
+from homework.homework5.node import Node, KT, VT, PT
 
 
 class Treap(MutableMapping):
