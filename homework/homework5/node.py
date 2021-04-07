@@ -159,9 +159,9 @@ class Node:
 
     def __remove_smallest(self) -> Optional["Node"]:
         """
-        Removes the smallest element from the node.
+        Removes the smallest key from the node.
 
-        :return: node without the smallest value.
+        :return: node without the smallest key.
         """
         if self.left_child is None:
             return self.right_child
