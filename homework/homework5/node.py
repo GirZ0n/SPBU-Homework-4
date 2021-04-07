@@ -47,9 +47,11 @@ class Node:
             return True
 
         if self.__key_in_left_child(key):
+            assert self.left_child is not None
             return key in self.left_child
 
         if self.__key_in_right_child(key):
+            assert self.right_child is not None
             return key in self.right_child
 
         return False
@@ -94,9 +96,11 @@ class Node:
             self.value = new_value
 
         if self.__key_in_left_child(key):
+            assert self.left_child is not None
             self.left_child.update(key, new_value)
 
         if self.__key_in_right_child(key):
+            assert self.right_child is not None
             self.right_child.update(key, new_value)
 
     def remove(self, key) -> Optional["Node"]:
