@@ -1,4 +1,3 @@
-from copy import deepcopy
 from random import random
 from typing import Tuple, Optional, Any
 from json import dumps, JSONEncoder, JSONDecoder
@@ -76,9 +75,9 @@ class Node:
 
         if left_split is None:
             return new_node.__merge(right_split)
-        else:
-            left_split = left_split.__merge(new_node)
-            return left_split.__merge(right_split)
+
+        left_split = left_split.__merge(new_node)
+        return left_split.__merge(right_split)
 
     def get(self, key) -> Any:
         if self.key == key:
@@ -105,8 +104,8 @@ class Node:
 
         if right_subtree is None:
             return left_subtree
-        else:
-            right_subtree = right_subtree.__remove_smallest()
+
+        right_subtree = right_subtree.__remove_smallest()
 
         if left_subtree is None:
             return right_subtree
@@ -130,15 +129,15 @@ class Node:
             result = self
             result.right_child = left_subtree
             return result, right_subtree
-        else:
-            if self.left_child is None:
-                return None, self
 
-            left_tree, right_tree = self.left_child.__split(key)
+        if self.left_child is None:
+            return None, self
 
-            result = self
-            result.left_child = right_tree
-            return left_tree, result
+        left_tree, right_tree = self.left_child.__split(key)
+
+        result = self
+        result.left_child = right_tree
+        return left_tree, result
 
     def __merge(self, other: Optional["Node"]) -> "Node":
         if other is None:
@@ -151,13 +150,13 @@ class Node:
             else:
                 result.right_child = self.right_child.__merge(other)
             return result
+
+        result = other
+        if other.left_child is None:
+            result.left_child = self
         else:
-            result = other
-            if other.left_child is None:
-                result.left_child = self
-            else:
-                result.left_child = self.__merge(other.left_child)
-            return result
+            result.left_child = self.__merge(other.left_child)
+        return result
 
     class NodeEncoder(JSONEncoder):
         def default(self, obj):
@@ -169,5 +168,6 @@ class Node:
         def __init__(self, *args, **kwargs):
             JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
 
-        def object_hook(self, dct):
+        @staticmethod
+        def object_hook(dct):
             return Node(**dct)
