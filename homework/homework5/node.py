@@ -235,6 +235,7 @@ class Node:
         """
         An auxiliary class that allows you to get the json representation of a node.
         """
+
         def default(self, obj):
             if isinstance(obj, Node):
                 return obj.__dict__
@@ -244,6 +245,7 @@ class Node:
         """
         A helper class that allows you to retrieve a node from a json representation.
         """
+
         def __init__(self, *args, **kwargs):
             JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
 
