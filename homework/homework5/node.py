@@ -1,6 +1,6 @@
+from json import dumps, JSONEncoder, JSONDecoder
 from random import random
 from typing import Tuple, Optional, Any, Iterator
-from json import dumps, JSONEncoder, JSONDecoder
 
 KT = float
 VT = Any
@@ -56,7 +56,7 @@ class Node:
             )
         return False
 
-    def __contains__(self, key: Any) -> bool:
+    def __contains__(self, key: KT) -> bool:
         """
         Checks if the key is contained in the node.
         """

@@ -1,5 +1,5 @@
 from collections.abc import MutableMapping
-from typing import Optional, Iterator, Any
+from typing import Optional, Iterator
 
 from homework.homework5.node import Node, KT, VT, PT
 
@@ -49,7 +49,7 @@ class Treap(MutableMapping):
 
         self.__size += 1
 
-    def __contains__(self, key: Any) -> bool:
+    def __contains__(self, key: KT) -> bool:
         """
         Checks if an item is in the tree.
         """
