@@ -46,10 +46,10 @@ class Node:
         if self.key == key:
             return True
 
-        if (self.left_child is not None) and (key < self.key):
+        if self.__key_in_left_child(key):
             return key in self.left_child
 
-        if (self.right_child is not None) and (key > self.key):
+        if self.__key_in_right_child(key):
             return key in self.right_child
 
         return False
@@ -83,20 +83,20 @@ class Node:
         if self.key == key:
             return self.value
 
-        if (self.left_child is not None) and (key < self.key):
+        if self.__key_in_left_child(key):
             return self.left_child.get(key)
 
-        if (self.right_child is not None) and (key > self.key):
+        if self.__key_in_right_child(key):
             return self.right_child.get(key)
 
     def update(self, key, new_value):
         if self.key == key:
             self.value = new_value
 
-        if (self.left_child is not None) and (key < self.key):
+        if self.__key_in_left_child(key):
             self.left_child.update(key, new_value)
 
-        if (self.right_child is not None) and (key > self.key):
+        if self.__key_in_right_child(key):
             self.right_child.update(key, new_value)
 
     def remove(self, key) -> Optional["Node"]:
@@ -157,6 +157,12 @@ class Node:
         else:
             result.left_child = self.__merge(other.left_child)
         return result
+
+    def __key_in_left_child(self, key) -> bool:
+        return (self.left_child is not None) and (key < self.key)
+
+    def __key_in_right_child(self, key) -> bool:
+        return (self.right_child is not None) and (key > self.key)
 
     class NodeEncoder(JSONEncoder):
         def default(self, obj):
