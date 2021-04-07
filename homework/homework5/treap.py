@@ -3,6 +3,10 @@ from typing import Optional, Iterator, Any
 
 from homework.homework5.node import Node
 
+KT = float
+VT = Any
+PT = float
+
 
 class Treap(MutableMapping):
     __size: int = 0
@@ -11,7 +15,7 @@ class Treap(MutableMapping):
     def __str__(self) -> str:
         return str(self.__head)
 
-    def __setitem__(self, key, value) -> None:
+    def __setitem__(self, key: KT, value: VT) -> None:
         if key in self:
             assert self.__head is not None
             self.__head.update(key, value)
@@ -23,7 +27,7 @@ class Treap(MutableMapping):
 
             self.__size += 1
 
-    def insert(self, key, value, priority) -> None:
+    def insert(self, key: KT, value: VT, priority: PT) -> None:
         if key in self:
             raise KeyError(f"The given key ({key}) is already in the tree")
 
@@ -34,10 +38,10 @@ class Treap(MutableMapping):
 
         self.__size += 1
 
-    def __contains__(self, key) -> bool:
+    def __contains__(self, key: Any) -> bool:
         return self.__head is not None and key in self.__head
 
-    def __delitem__(self, key) -> None:
+    def __delitem__(self, key: KT) -> None:
         if self.__head is None:
             raise KeyError("The treap is empty")
 
@@ -48,7 +52,7 @@ class Treap(MutableMapping):
 
         self.__size -= 1
 
-    def __getitem__(self, key) -> Any:
+    def __getitem__(self, key: KT) -> VT:
         if self.__head is None:
             raise KeyError("The treap is empty")
 
@@ -60,13 +64,13 @@ class Treap(MutableMapping):
     def __len__(self) -> int:
         return self.__size
 
-    def __iter__(self) -> Iterator[Any]:
+    def __iter__(self) -> Iterator[VT]:
         if self.__head is None:
             yield from ()
         else:
             yield from self.__head
 
-    def __reversed__(self) -> Iterator[Any]:
+    def __reversed__(self) -> Iterator[VT]:
         if self.__head is None:
             yield from ()
         else:

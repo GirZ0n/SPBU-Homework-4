@@ -1,21 +1,24 @@
 from random import random
-from typing import Tuple, Optional, Any
+from typing import Tuple, Optional, Any, Iterator
 from json import dumps, JSONEncoder, JSONDecoder
+from homework.homework5.treap import KT, VT, PT
 
 
 class Node:
-    priority: float
+    key: KT
+    value: VT
+    priority: PT
 
     left_child: Optional["Node"] = None
     right_child: Optional["Node"] = None
 
     def __init__(
-        self,
-        key,
-        value,
-        priority: Optional[float] = None,
-        left_child: Optional["Node"] = None,
-        right_child: Optional["Node"] = None,
+            self,
+            key: KT,
+            value: VT,
+            priority: Optional[PT] = None,
+            left_child: Optional["Node"] = None,
+            right_child: Optional["Node"] = None,
     ):
         self.key = key
         self.value = value
@@ -31,18 +34,18 @@ class Node:
     def __str__(self):
         return dumps(self, allow_nan=True, cls=self.NodeEncoder)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any):
         if isinstance(other, Node):
             return (
-                self.key == other.key
-                and self.value == other.value
-                and self.priority == other.priority
-                and self.left_child == other.left_child
-                and self.right_child == other.right_child
+                    self.key == other.key
+                    and self.value == other.value
+                    and self.priority == other.priority
+                    and self.left_child == other.left_child
+                    and self.right_child == other.right_child
             )
         return False
 
-    def __contains__(self, key) -> bool:
+    def __contains__(self, key: Any) -> bool:
         if self.key == key:
             return True
 
@@ -56,21 +59,21 @@ class Node:
 
         return False
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[VT]:
         yield self.value
         if self.left_child is not None:
             yield from self.left_child
         if self.right_child is not None:
             yield from self.right_child
 
-    def __reversed__(self):
+    def __reversed__(self) -> Iterator[VT]:
         if self.left_child is not None:
             yield from reversed(self.left_child)
         if self.right_child is not None:
             yield from reversed(self.right_child)
         yield self.value
 
-    def insert(self, key, value, priority: Optional[float] = None) -> "Node":
+    def insert(self, key: KT, value: VT, priority: Optional[PT] = None) -> "Node":
         new_node = Node(key, value, priority)
 
         left_split, right_split = self.__split(key)
@@ -81,7 +84,7 @@ class Node:
         left_split = left_split.__merge(new_node)
         return left_split.__merge(right_split)
 
-    def get(self, key) -> Any:
+    def get(self, key: KT) -> VT:
         if self.key == key:
             return self.value
 
@@ -93,7 +96,7 @@ class Node:
             assert self.right_child is not None
             return self.right_child.get(key)
 
-    def update(self, key, new_value):
+    def update(self, key: KT, new_value: VT):
         if self.key == key:
             self.value = new_value
 
@@ -105,7 +108,7 @@ class Node:
             assert self.right_child is not None
             self.right_child.update(key, new_value)
 
-    def remove(self, key) -> Optional["Node"]:
+    def remove(self, key: KT) -> Optional["Node"]:
         left_subtree, right_subtree = self.__split(key)
 
         if right_subtree is None:
@@ -125,7 +128,7 @@ class Node:
         self.left_child = self.left_child.__remove_smallest()
         return self
 
-    def __split(self, key) -> Tuple[Optional["Node"], Optional["Node"]]:
+    def __split(self, key: KT) -> Tuple[Optional["Node"], Optional["Node"]]:
         if key > self.key:
             if self.right_child is None:
                 return self, None
@@ -164,10 +167,10 @@ class Node:
             result.left_child = self.__merge(other.left_child)
         return result
 
-    def __key_in_left_child(self, key) -> bool:
+    def __key_in_left_child(self, key: KT) -> bool:
         return (self.left_child is not None) and (key < self.key)
 
-    def __key_in_right_child(self, key) -> bool:
+    def __key_in_right_child(self, key: KT) -> bool:
         return (self.right_child is not None) and (key > self.key)
 
     class NodeEncoder(JSONEncoder):
