@@ -86,9 +86,11 @@ class Node:
             return self.value
 
         if self.__key_in_left_child(key):
+            assert self.left_child is not None
             return self.left_child.get(key)
 
         if self.__key_in_right_child(key):
+            assert self.right_child is not None
             return self.right_child.get(key)
 
     def update(self, key, new_value):
