@@ -13,12 +13,12 @@ class Node:
     right_child: Optional["Node"] = None
 
     def __init__(
-            self,
-            key: KT,
-            value: VT,
-            priority: Optional[PT] = None,
-            left_child: Optional["Node"] = None,
-            right_child: Optional["Node"] = None,
+        self,
+        key: KT,
+        value: VT,
+        priority: Optional[PT] = None,
+        left_child: Optional["Node"] = None,
+        right_child: Optional["Node"] = None,
     ):
         self.key = key
         self.value = value
@@ -37,11 +37,11 @@ class Node:
     def __eq__(self, other: Any):
         if isinstance(other, Node):
             return (
-                    self.key == other.key
-                    and self.value == other.value
-                    and self.priority == other.priority
-                    and self.left_child == other.left_child
-                    and self.right_child == other.right_child
+                self.key == other.key
+                and self.value == other.value
+                and self.priority == other.priority
+                and self.left_child == other.left_child
+                and self.right_child == other.right_child
             )
         return False
 
