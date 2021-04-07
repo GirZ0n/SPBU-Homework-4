@@ -4,7 +4,7 @@ from pathlib import Path
 
 from homework.homework5.node import Node
 
-resources = Path("tests/homework5/resources")
+resources = Path("tests/resources/homework5")
 
 
 def create_full_node() -> Node:
@@ -18,21 +18,22 @@ def create_full_node() -> Node:
     return node
 
 
+def load_node_from_json(file_name: str) -> Node:
+    with open(resources / file_name) as f:
+        return json.loads(f.read(), cls=Node.NodeDecoder)
+
+
 class NodeTestCase(unittest.TestCase):
     def test_insert_without_child(self):
         actual = Node(1, 1, 1)
-
-        with open(resources / "without_child.json") as f:
-            expected = json.loads(f.read(), cls=Node.NodeDecoder)
-
+        expected = load_node_from_json("without_child.json")
         self.assertEqual(expected, actual)
 
     def test_insert_only_left_child(self):
         actual = Node(1, 1, 1)
         actual = actual.insert(2, 2, 4)
 
-        with open(resources / "only_left_child.json") as f:
-            expected = json.loads(f.read(), cls=Node.NodeDecoder)
+        expected = load_node_from_json("only_left_child.json")
 
         self.assertEqual(expected, actual)
 
@@ -40,17 +41,13 @@ class NodeTestCase(unittest.TestCase):
         actual = Node(3, 3, 1)
         actual = actual.insert(2, 2, 4)
 
-        with open(resources / "only_right_child.json") as f:
-            expected = json.loads(f.read(), cls=Node.NodeDecoder)
+        expected = load_node_from_json("only_right_child.json")
 
         self.assertEqual(expected, actual)
 
     def test_insert_full_treap(self):
         actual = create_full_node()
-
-        with open(resources / "full_treap.json") as f:
-            expected = json.loads(f.read(), cls=Node.NodeDecoder)
-
+        expected = load_node_from_json("full_treap.json")
         self.assertEqual(expected, actual)
 
     def test_contains_key_in_node(self):
