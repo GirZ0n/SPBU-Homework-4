@@ -4,7 +4,7 @@ from pathlib import Path
 from homework.homework5.treap import Treap
 from tests.tests_utils import check_message
 
-resources = Path("tests/homework5/resources")
+resources = Path("tests/resources/homework5")
 
 
 def create_full_treap() -> Treap:
