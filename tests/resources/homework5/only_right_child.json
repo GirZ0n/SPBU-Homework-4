@@ -1,0 +1,13 @@
+{
+    "key": 2,
+    "value": 2,
+    "priority": 4,
+    "left_child": null,
+    "right_child": {
+        "key": 3,
+        "value": 3,
+        "priority": 1,
+        "left_child": null,
+        "right_child": null
+    }
+}

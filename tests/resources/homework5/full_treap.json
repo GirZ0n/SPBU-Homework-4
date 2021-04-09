@@ -1,0 +1,43 @@
+{
+    "key": 4,
+    "value": 4,
+    "priority": 7,
+    "left_child": {
+        "key": 2,
+        "value": 2,
+        "priority": 4,
+        "left_child": {
+            "key": 1,
+            "value": 1,
+            "priority": 1,
+            "left_child": null,
+            "right_child": null
+        },
+        "right_child": {
+            "key": 3,
+            "value": 3,
+            "priority": 3,
+            "left_child": null,
+            "right_child": null
+        }
+    },
+    "right_child": {
+        "key": 6,
+        "value": 6,
+        "priority": 6,
+        "left_child": {
+            "key": 5,
+            "value": 5,
+            "priority": 5,
+            "left_child": null,
+            "right_child": null
+        },
+        "right_child": {
+            "key": 7,
+            "value": 7,
+            "priority": 2,
+            "left_child": null,
+            "right_child": null
+        }
+    }
+}
