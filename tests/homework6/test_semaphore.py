@@ -1,5 +1,5 @@
 import unittest
-from typing import Callable
+from typing import Callable, List
 from threading import Thread
 
 from tests.tests_utils import check_message
@@ -64,8 +64,8 @@ class SemaphoreIncrementTestCase(unittest.TestCase):
 class SemaphoreSquareTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.semaphore = Semaphore()
-        self.numbers = []
-        self.result = []
+        self.numbers: List[int] = []
+        self.result: List[int] = []
 
     def square(self):
         while True:
