@@ -40,22 +40,22 @@ class SemaphoreIncrementTestCase(unittest.TestCase):
             for i in range(100_000):
                 self.count += 1
 
-    def test_increment_one_thread(self):
+    def test_increment_1_thread(self):
         run_threads(1, self.increment)
 
         self.assertEqual(self.count, 100_000)
 
-    def test_increment_ten_threads(self):
+    def test_increment_10_threads(self):
         run_threads(10, self.increment)
 
         self.assertEqual(self.count, 100_000 * 10)
 
-    def test_increment_with_long_critical_section_one_thread(self):
+    def test_increment_with_long_critical_section_1_thread(self):
         run_threads(1, self.increment_with_long_critical_section)
 
         self.assertEqual(self.count, 100_000)
 
-    def test_increment_with_long_critical_section_ten_threads(self):
+    def test_increment_with_long_critical_section_10_threads(self):
         run_threads(10, self.increment_with_long_critical_section)
 
         self.assertEqual(self.count, 100_000 * 10)
@@ -75,7 +75,7 @@ class SemaphoreSquareTestCase(unittest.TestCase):
                 else:
                     return
 
-    def test_1_number_one_thread(self):
+    def test_1_number_1_thread(self):
         self.numbers.append(104)
 
         run_threads(1, self.square)
