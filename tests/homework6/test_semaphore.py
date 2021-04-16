@@ -7,7 +7,6 @@ from homework.homework6.semaphore import Semaphore
 
 
 class SemaphoreIncrementTestCase(unittest.TestCase):
-
     def setUp(self) -> None:
         self.semaphore = Semaphore()
         self.count = 0
