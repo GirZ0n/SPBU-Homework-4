@@ -1,2 +1,7 @@
 black==20.8b1
 mypy==0.812
+PySimpleGUI~=4.41.2
+opencv-python~=4.5.2.52
+numpy~=1.20.3
+requests~=2.25.1
+Flask~=2.0.0
