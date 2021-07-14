@@ -150,6 +150,10 @@ Here you can find conditions and solutions to problems for the fourth semester
 
 [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework8)
 
+### NLTK-Report
+
+[[Report]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/nltk-report/NLTK.pdf)
+
 ## Exam
 
 ### Test
