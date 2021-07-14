@@ -145,3 +145,7 @@ Here you can find conditions and solutions to problems for the fourth semester
 
 [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework6/semaphore.py)
 
+### Homework №8
+Рeализовать сервис по обработке изображения. Серверная часть должна принимать картинку и обрабатывать одним из предложенных алгоритмов. Клиентская часть предоставляет форму загрузки изображения, а так же показывает картинку до и после обработки.
+
+[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework8)
