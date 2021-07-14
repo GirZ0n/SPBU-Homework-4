@@ -131,6 +131,15 @@ Here you can find conditions and solutions to problems for the fourth semester
 
 [[Solution]](https://datalore.jetbrains.com/notebook/YW5XF5gfYleLNLqFsI0Y9D/urEXnJcXEtFlfB4FwRlEQD)
 
+### Homework №5
+Реализуйте [декартово дерево](https://neerc.ifmo.ru/wiki/index.php?title=%D0%94%D0%B5%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D0%B2%D0%BE_%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BE). Требования:
+- Структура должна реализовывать `MutableMapping`.
+- Реализуйте прямой и обратный итераторы (`__iter__` возвращает прямой).
+- Взаимодействие с элементами через `[]`.
+- Проверку ключа через оператор `in`.
+
+[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework5)
+
 ### Homework №6
 Реализовать семафор через менеджер контекстов (доступ к объекту через `with`). Написать тесты для него используя многопоточность.
 
