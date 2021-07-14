@@ -149,3 +149,52 @@ Here you can find conditions and solutions to problems for the fourth semester
 Рeализовать сервис по обработке изображения. Серверная часть должна принимать картинку и обрабатывать одним из предложенных алгоритмов. Клиентская часть предоставляет форму загрузки изображения, а так же показывает картинку до и после обработки.
 
 [[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/tree/main/homework/homework8)
+
+## Exam
+
+### Test
+1. Напишите декоратор `@spy` и функцию `print_usage_statistic(function: Callable)`, которая выдает генератор кортежей из двух элементов: времени запуска (во сколько запускали) функцию `function` и параметров, с которыми она была запущена. Для работы функции `print_usage_statistic` необходимо, чтобы функция была декорирована, если это не так, то пользователь должен получить соответствующее сообщение.
+
+```python
+@spy
+def foo(num):
+   print(num)
+
+
+if __name__ == '__main__':
+   foo(30)
+   foo("hello")
+   foo(5)
+
+   for (time, parameters) in print_usage_statistic(foo):
+       str_parameters = ", ".join(
+           f"{k} = {v}" for k, v in parameters.items()
+       )
+       print(
+           f"function {foo.__name__} was called at {time} "
+           f"with parameters:\n{str_parameters}"
+       )
+```
+
+[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/exam/test1/task1/spy.py)
+
+3. Напишите функцию правой свёртки `reduce_right(function, values, [initial])`. Необходимо написать свою, использовать встроенный `reduce` нельзя. Использовать рекурсию также нельзя – последовательность данных может быть достаточно длинной, чтобы влезть в память (миллион чисел), но не влезть в стек вызовов функций (он обычно ограничен несколькими тысячами). Последовательность может быть не только списком, кортежом или строкой, но и совершенно произвольной, например, открытым файлом (который читается построчно). </br> </br>
+Примеры работы:
+```
+Input:
+print(reduce_right(lambda x, y: f'({x}+{y})', 'abcde'))
+Output:
+(a+(b+(c+(d+e))))
+```
+```
+Input:
+print(reduce_right(
+    lambda x, y: f'({x}+{y})',
+    (ord(c) for c in 'abcde')
+))
+Output:
+(97+(98+(99+(100+101))))
+```
+
+[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/exam/test1/task3/reduce_right.py)
+
