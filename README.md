@@ -130,3 +130,9 @@ Here you can find conditions and solutions to problems for the fourth semester
         * Тип ириса вы берете из предсказанных данных
 
 [[Solution]](https://datalore.jetbrains.com/notebook/YW5XF5gfYleLNLqFsI0Y9D/urEXnJcXEtFlfB4FwRlEQD)
+
+### Homework №6
+Реализовать семафор через менеджер контекстов (доступ к объекту через `with`). Написать тесты для него используя многопоточность.
+
+[[Solution]](https://github.com/GirZ0n/SPBU-Homework-4/blob/main/homework/homework6/semaphore.py)
+
