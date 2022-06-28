@@ -80,25 +80,25 @@ class SemaphoreSquareTestCase(unittest.TestCase):
 
         run_threads(1, self.square)
 
-        self.assertEqual(self.result, [104 ** 2])
+        self.assertEqual(self.result, [104**2])
 
     def test_1_number_10_threads(self):
         self.numbers.append(172)
 
         run_threads(10, self.square)
 
-        self.assertEqual(self.result, [172 ** 2])
+        self.assertEqual(self.result, [172**2])
 
     def test_many_numbers_1_thread(self):
         self.numbers.extend(range(100_000))
 
         run_threads(1, self.square)
 
-        self.assertEqual(self.result, list(map(lambda x: x ** 2, range(100_000))))
+        self.assertEqual(self.result, list(map(lambda x: x**2, range(100_000))))
 
     def test_many_numbers_10_thread(self):
         self.numbers.extend(range(100_000))
 
         run_threads(10, self.square)
 
-        self.assertEqual(self.result, list(map(lambda x: x ** 2, range(100_000))))
+        self.assertEqual(self.result, list(map(lambda x: x**2, range(100_000))))
