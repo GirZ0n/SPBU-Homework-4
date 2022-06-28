@@ -80,7 +80,10 @@ class CacheFunctionWithOneArgumentTestCase(TestCase):
         fib(9)
         fib(8)
 
-        self.assertEqual(fib._cache, OrderedDict([((6,), 8), ((7,), 13), ((8,), 21), ((9,), 34), ((10,), 55)]))
+        self.assertEqual(
+            fib._cache,
+            OrderedDict([((6,), 8), ((7,), 13), ((8,), 21), ((9,), 34), ((10,), 55)]),
+        )
 
 
 class CacheFunctionWithArgsTestCase(TestCase):
@@ -89,14 +92,14 @@ class CacheFunctionWithArgsTestCase(TestCase):
 
             @cache_decorator(size=-444)
             def sum_of_squares(*args: int) -> int:
-                return sum(x ** 2 for x in args)
+                return sum(x**2 for x in args)
 
         self.assertTrue(check_message(context, SIZE_MUST_BE_NON_NEGATIVE))
 
     def test_zero_size_cache(self):
         @cache_decorator
         def sum_of_squares(*args: int) -> int:
-            return sum(x ** 2 for x in args)
+            return sum(x**2 for x in args)
 
         sum_of_squares(3, 4, 5)
         sum_of_squares(6, 7, 8)
@@ -107,7 +110,7 @@ class CacheFunctionWithArgsTestCase(TestCase):
     def test_positive_size_cache(self):
         @cache_decorator(size=10)
         def sum_of_squares(*args: int) -> int:
-            return sum(x ** 2 for x in args)
+            return sum(x**2 for x in args)
 
         sum_of_squares(3, 4, 5)
         sum_of_squares(3, 5, 4)
@@ -125,14 +128,21 @@ class CacheFunctionWithArgsTestCase(TestCase):
         self.assertEqual(
             sum_of_squares._cache,
             OrderedDict(
-                [((3, 4, 5), 50), ((3, 5, 4), 50), ((4, 3, 5), 50), ((4, 5, 3), 50), ((5, 3, 4), 50), ((5, 4, 3), 50)]
+                [
+                    ((3, 4, 5), 50),
+                    ((3, 5, 4), 50),
+                    ((4, 3, 5), 50),
+                    ((4, 5, 3), 50),
+                    ((5, 3, 4), 50),
+                    ((5, 4, 3), 50),
+                ]
             ),
         )
 
     def test_cache_size_is_smaller_than_function_needs(self):
         @cache_decorator(size=3)
         def sum_of_squares(*args: int) -> int:
-            return sum(x ** 2 for x in args)
+            return sum(x**2 for x in args)
 
         sum_of_squares(3, 4, 5)
         sum_of_squares(3, 5, 4)
@@ -141,7 +151,10 @@ class CacheFunctionWithArgsTestCase(TestCase):
         sum_of_squares(5, 3, 4)
         sum_of_squares(5, 4, 3)
 
-        self.assertEqual(sum_of_squares._cache, OrderedDict([((4, 5, 3), 50), ((5, 3, 4), 50), ((5, 4, 3), 50)]))
+        self.assertEqual(
+            sum_of_squares._cache,
+            OrderedDict([((4, 5, 3), 50), ((5, 3, 4), 50), ((5, 4, 3), 50)]),
+        )
 
 
 class CacheFunctionWithOneKeywordArgument(TestCase):
@@ -212,7 +225,13 @@ class CacheFunctionWithOneKeywordArgument(TestCase):
         self.assertEqual(
             fib._cache,
             OrderedDict(
-                [((("n", 6),), 8), ((("n", 7),), 13), ((("n", 8),), 21), ((("n", 9),), 34), ((("n", 10),), 55)]
+                [
+                    ((("n", 6),), 8),
+                    ((("n", 7),), 13),
+                    ((("n", 8),), 21),
+                    ((("n", 9),), 34),
+                    ((("n", 10),), 55),
+                ]
             ),
         )
 
@@ -223,14 +242,14 @@ class CacheFunctionWithKwargsTestCase(TestCase):
 
             @cache_decorator(size=-289)
             def sum_of_squares(**kwargs: int) -> int:
-                return sum(x ** 2 for _, x in kwargs.items())
+                return sum(x**2 for _, x in kwargs.items())
 
         self.assertTrue(check_message(context, SIZE_MUST_BE_NON_NEGATIVE))
 
     def test_zero_size_cache(self):
         @cache_decorator
         def sum_of_squares(**kwargs: int) -> int:
-            return sum(x ** 2 for _, x in kwargs.items())
+            return sum(x**2 for _, x in kwargs.items())
 
         sum_of_squares(a=3, b=4, c=5)
         sum_of_squares(a=6, b=7, c=8)
@@ -241,7 +260,7 @@ class CacheFunctionWithKwargsTestCase(TestCase):
     def test_positive_size_cache(self):
         @cache_decorator(size=10)
         def sum_of_squares(**kwargs: int) -> int:
-            return sum(x ** 2 for _, x in kwargs.items())
+            return sum(x**2 for _, x in kwargs.items())
 
         sum_of_squares(a=3, b=4, c=5)
         sum_of_squares(a=3, b=5, c=4)
@@ -273,7 +292,7 @@ class CacheFunctionWithKwargsTestCase(TestCase):
     def test_cache_size_is_smaller_than_function_needs(self):
         @cache_decorator(size=3)
         def sum_of_squares(**kwargs: int) -> int:
-            return sum(x ** 2 for _, x in kwargs.items())
+            return sum(x**2 for _, x in kwargs.items())
 
         sum_of_squares(a=3, b=4, c=5)
         sum_of_squares(a=3, b=5, c=4)
