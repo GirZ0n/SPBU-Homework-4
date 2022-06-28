@@ -1,5 +1,5 @@
 # SPBU-Homework-4
-Here you can find conditions and solutions to problems for the fourth semester
+Here you can find conditions and solutions to problems for the fourth semester.
 
 ## Navigation menu
 * [Semester №1](https://github.com/GirZ0n/SPBU-Homework-1) 
