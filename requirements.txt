@@ -1,4 +1,4 @@
-black==22.6.0
+black==22.3.0
 mypy==0.812
 PySimpleGUI~=4.41.2
 opencv-python~=4.5.2.52
